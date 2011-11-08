@@ -76,10 +76,10 @@ class Files {
 
 		foreach ($directoryIterator as $fileInfo) {
 			$filename = $fileInfo->getFilename();
-			if ($fileInfo->isFile() && $filename[0] !== '.' && ($suffix === NULL || substr($filename, -$suffixLength) === $suffix)) {
+			if ($fileInfo->isFile() && !$fileInfo->isDot() && ($suffix === NULL || substr($filename, -$suffixLength) === $suffix)) {
 				$filenames[] = self::getUnixStylePath(($returnRealPath === TRUE ? realpath($fileInfo->getPathname()) : $fileInfo->getPathname()));
 			}
-			if ($fileInfo->isDir() && $filename[0] !== '.') {
+			if ($fileInfo->isDir() && !$fileInfo->isDot()) {
 				self::readDirectoryRecursively($fileInfo->getPathname(), $suffix, $returnRealPath, $filenames);
 			}
 		}
@@ -178,8 +178,9 @@ class Files {
 
 		$resourceFilenames = self::readDirectoryRecursively($sourceDirectory);
 		foreach ($resourceFilenames as $filename) {
-			$relativeFilename = str_replace($sourceDirectory, '', $filename);
-			self::createDirectoryRecursively($targetDirectory . dirname($relativeFilename));
+			$relativeFilename = substr($filename, strlen($sourceDirectory));
+			$directory = $targetDirectory . '/' . dirname($relativeFilename);
+			self::createDirectoryRecursively($directory);
 			copy($filename, self::concatenatePaths(array($targetDirectory, $relativeFilename)));
 		}
 	}
