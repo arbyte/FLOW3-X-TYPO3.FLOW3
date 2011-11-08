@@ -178,8 +178,9 @@ class Files {
 
 		$resourceFilenames = self::readDirectoryRecursively($sourceDirectory);
 		foreach ($resourceFilenames as $filename) {
-			$relativeFilename = str_replace($sourceDirectory, '', $filename);
-			self::createDirectoryRecursively($targetDirectory . dirname($relativeFilename));
+			$relativeFilename = substr($filename, strlen($sourceDirectory));
+			$directory = $targetDirectory . '/' . dirname($relativeFilename);
+			self::createDirectoryRecursively($directory);
 			copy($filename, self::concatenatePaths(array($targetDirectory, $relativeFilename)));
 		}
 	}
