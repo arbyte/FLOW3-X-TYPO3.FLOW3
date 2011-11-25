@@ -79,7 +79,7 @@ class AuthenticationController extends \TYPO3\FLOW3\MVC\Controller\ActionControl
 	 * @api
 	 */
 	protected function getErrorFlashMessage() {
-		return 'Wrong credentials.';
+		return new \TYPO3\FLOW3\Error\Message('Wrong credentials.');
 	}
 }
 ?>
