@@ -184,5 +184,24 @@ class Response extends \TYPO3\FLOW3\MVC\Response {
 			echo $this->getContent();
 		}
 	}
+
+    /**
+     * Redirects to the specified URI
+     *
+     * @param string $uri
+     * @param int $delay
+     * @param int $statusCode
+     * @throws \TYPO3\FLOW3\MVC\Exception\StopActionException
+     */
+   	public function redirect($uri, $delay = 0, $statusCode = 303) {
+   		$escapedUri = htmlentities($uri, ENT_QUOTES, 'utf-8');
+   		$this->setContent('<html><head><meta http-equiv="refresh" content="' . intval($delay) . ';url=' . $escapedUri . '"/></head></html>');
+   		$this->setStatus($statusCode);
+        if ($delay === 0) {
+            $this->setHeader('Location', (string)$uri);
+        }
+
+   		throw new \TYPO3\FLOW3\MVC\Exception\StopActionException();
+   	}
 }
 ?>
