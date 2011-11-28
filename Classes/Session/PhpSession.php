@@ -238,7 +238,7 @@ class PhpSession implements \TYPO3\FLOW3\Session\SessionInterface {
 	 * @throws \TYPO3\FLOW3\Session\Exception\SessionNotStartedException
 	 */
 	public function destroy() {
-		if ($this->started !== TRUE) throw new \TYPO3\FLOW3\Session\Exception\SessionNotStartedException('The session has not been started yet.', 1218043311);
+		if ($this->started !== TRUE) return; //throw new \TYPO3\FLOW3\Session\Exception\SessionNotStartedException('The session has not been started yet.', 1218043311);
 		try {
 			$cookieInfo = session_get_cookie_params();
 			if ((empty($cookieInfo['domain'])) && (empty($cookieInfo['secure']))) {

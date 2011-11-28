@@ -277,7 +277,7 @@ abstract class AbstractController implements ControllerInterface {
 		}
 
 		$uri = $this->uriBuilder->uriFor($actionName, $arguments, $controllerName, $packageKey, $subpackageKey);
-		$this->redirectToUri($this->request->getBaseUri() . $uri, $delay, $statusCode);
+		$this->response->redirect($this->request->getBaseUri() . $uri, $delay, $statusCode);
 	}
 
 	/**

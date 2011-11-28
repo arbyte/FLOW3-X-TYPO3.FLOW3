@@ -56,6 +56,9 @@ class AuthenticationController extends \TYPO3\FLOW3\MVC\Controller\ActionControl
 				if ($subpackageKey !== NULL) $packageKey .= '\\' . $subpackageKey;
 				$this->redirect($storedRequest->getControllerActionName(), $storedRequest->getControllerName(), $packageKey, $storedRequest->getArguments());
 			}
+			else {
+				return $authenticated;
+			}
 		} else {
 			return $this->errorAction();
 		}
@@ -79,7 +82,7 @@ class AuthenticationController extends \TYPO3\FLOW3\MVC\Controller\ActionControl
 	 * @api
 	 */
 	protected function getErrorFlashMessage() {
-		return 'Wrong credentials.';
+		return new \TYPO3\FLOW3\Error\Message('Wrong credentials.');
 	}
 }
 ?>
