@@ -60,6 +60,12 @@ class Request implements RequestInterface {
 	protected $commandLineArguments;
 
 	/**
+	 * HTTP Header contains X-Requested-With:'XMLHttpRequest'
+	 * @var boolean
+	 */
+	protected $xmlHttpRequest = FALSE;
+
+	/**
 	 * Sets the dispatched flag
 	 *
 	 * @param boolean $flag If this request has been dispatched
@@ -211,6 +217,14 @@ class Request implements RequestInterface {
 	 */
 	public function getExceedingArguments() {
 		return $this->exceedingArguments;
+	}
+	
+	/**
+	* 
+	* @return boolean
+	*/
+	public function isXmlHttpRequest(){
+		return $this->xmlHttpRequest;
 	}
 
 }

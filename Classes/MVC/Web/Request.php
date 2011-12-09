@@ -130,6 +130,17 @@ class Request implements \TYPO3\FLOW3\MVC\RequestInterface {
 	protected $baseUri;
 
 	/**
+	 * HTTP Header contains X-Requested-With:'XMLHttpRequest'
+	 * @var boolean
+	 */
+	protected $xmlHttpRequest = NULL;
+	
+	/**
+	* @var  \TYPO3\FLOW3\Utility\Environment
+	*/
+	protected $environment;
+
+	/**
 	 * Injects the object manager
 	 *
 	 * @param \TYPO3\FLOW3\Object\ObjectManagerInterface $objectManager A reference to the object manager
@@ -610,6 +621,18 @@ class Request implements \TYPO3\FLOW3\MVC\RequestInterface {
 			return $referringRequest;
 		}
 		return NULL;
+	}
+	
+	/**
+	* 
+	* @return boolean
+	*/
+	public function isXmlHttpRequest(){
+		if($this->xmlHttpRequest !== NULL) return $this->xmlHttpRequest;
+		if(!$this->environment) $this->environment = $this->objectManager->get('TYPO3\FLOW3\Utility\Environment');
+		$headers = $this->environment->getRequestHeaders();
+		$this->xmlHttpRequest = (isset($headers['X-Requested-With']) && $headers['X-Requested-With'] == 'XMLHttpRequest');
+		return $this->xmlHttpRequest;
 	}
 }
 ?>
