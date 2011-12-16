@@ -37,6 +37,10 @@ class StringLengthValidator extends \TYPO3\FLOW3\Validation\Validator\AbstractVa
 			throw new \TYPO3\FLOW3\Validation\Exception\InvalidValidationOptionsException('The \'maximum\' is shorter than the \'minimum\' in the StringLengthValidator.', 1238107096);
 		}
 
+        if (empty($value)) {
+            return;
+        }
+
 		if (is_object($value)) {
 			if (!method_exists($value, '__toString')) {
 				throw new \TYPO3\FLOW3\Validation\Exception\InvalidSubjectException('The given object could not be converted to a string.', 1238110957);
