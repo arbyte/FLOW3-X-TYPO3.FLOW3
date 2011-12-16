@@ -38,6 +38,13 @@ interface RequestInterface {
 	 * @api
 	 */
 	public function isDispatched();
+	
+	/**
+	* 
+	* HTTP Header contains X-Requested-With:'XMLHttpRequest'
+	* @return boolean
+	*/
+	public function isXmlHttpRequest();
 
 }
 ?>
